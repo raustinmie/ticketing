@@ -13,7 +13,9 @@
     "axios": "^1.8.2",
     "bootstrap": "^5.3.3",
     "next": "^15.2.1",
+    "prop-types": "^15.8.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-stripe-checkout": "^2.6.3"
   }
 }

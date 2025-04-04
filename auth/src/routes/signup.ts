@@ -18,7 +18,7 @@ router.post('/api/users/signup/',
 ],
 validateRequest,
 async (req: Request, res: Response) => {
-    
+
 const { email, password } = req.body;
 const existingUser = await User.findOne({ email });
 if (existingUser) {
@@ -39,7 +39,6 @@ const userJwt = jwt.sign({
 req.session = {
     jwt: userJwt
 };
-
 return res.status(201).send(user);
 });
 

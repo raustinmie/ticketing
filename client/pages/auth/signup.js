@@ -16,7 +16,13 @@ export default () => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        const response = await doRequest();
+        try {
+            await doRequest();
+        }
+        catch (err) {
+            console.log(err);
+        }
+        // const response = await doRequest();
     };
 
     return <form onSubmit={onSubmit}>
