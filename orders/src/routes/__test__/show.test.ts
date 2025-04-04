@@ -25,7 +25,7 @@ it('fetches the order', async () => {
         .send()
         .expect(200);
 
-    expect(response.body.order.id).toEqual(order.id);
+    expect(response.body.id).toEqual(order.id);
 });
 
 it('does not fetch another users order', async () => {
