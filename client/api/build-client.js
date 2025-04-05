@@ -4,7 +4,7 @@ export default ({ req }) => {
     if (typeof window === 'undefined') {
         // We are on the server
         return axios.create({
-        baseURL: 'https://www.austin-miedema-ticketing-app.xyz',
+        baseURL: 'http://www.austin-miedema-ticketing-app.xyz',
         headers: req.headers
         });
     } else {
