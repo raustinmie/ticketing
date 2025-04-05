@@ -12,7 +12,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - run: cd auth && docker build -t austinmie/auth
+            - run: cd auth && docker build -t austinmie/auth .
             - run: echo "${{ secrets.DOCKER_PAT }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
             - run: docker push austinmie/auth
             - run: docker logout
