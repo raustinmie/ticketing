@@ -1,0 +1,23 @@
+name: deploy-orders
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "orders/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd orders && docker build -t austinmie/orders .
+      - run: echo "${{ secrets.DOCKER_PAT }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - run: docker push austinmie/orders
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save ticketing
+      - run: kubectl rollout restart deployment orders-depl
+      - run: docker logout
