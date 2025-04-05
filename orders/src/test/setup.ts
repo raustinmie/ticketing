@@ -11,6 +11,8 @@ let mongo: any;
 jest.mock('../nats-wrapper');
 
 beforeAll(async () => {
+    console.log("Starting...");
+
     console.log('Starting Mongo Memory Server...');
     process.env.JWT_KEY = "testkey";
     try{
