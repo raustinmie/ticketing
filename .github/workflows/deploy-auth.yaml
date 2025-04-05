@@ -15,11 +15,17 @@ jobs:
             - run: cd auth && docker build -t austinmie/auth .
             - run: echo "${{ secrets.DOCKER_PAT }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
             - run: docker push austinmie/auth
-            - run: echo "DIGITAL_ACCESS_SECRET is available"
-              if: ${{ secrets.DIGITAL_ACCESS_SECRET != '' }}
+            - name: Check if DIGITAL_ACCESS_SECRET is set
+              run: |
+                if [ -z "${{ secrets.DIGITAL_ACCESS_SECRET }}" ]; then
+                  echo "❌ Secret is NOT set"
+                  exit 1
+                else
+                  echo "✅ Secret is set"
+                fi
             - uses: digitalocean/action-doctl@v2
-              with:
-                token: ${{ secrets.DIGITAL_ACCESS_SECRET }}
+              env:
+                DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITAL_ACCESS_SECRET }}
             - run: doctl kubernetes cluster kubeconfig save ticketing
             - run: kubectl rollout restart deployment auth-depl
             - run: docker logout
